@@ -1,0 +1,41 @@
+name: Update lists.txt
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-lists:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Update lists.txt
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.event.after }}
+        run: |
+          node scripts/update_lists_main.js
+
+      - name: Commit and Push
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add lists.txt
+            git commit -m "chore: activate entries in lists.txt for recent merge"
+            git push origin main
+          else
+            echo "No changes to commit."
+          fi
