@@ -30,16 +30,18 @@ jobs:
 
       - name: Create credentials file
         run: |
-          echo '{"dnspod":{"TYPE":"DNSPOD","api_token":"$DNSPOD_TOKEN"}}' > ./scripts/creds.json
+          echo '{"dnspod":{"TYPE":"TENCENTDNS","secret_id":"$TENCENTCLOUD_SECRET_ID","secret_key":"$TENCENTCLOUD_SECRET_KEY"}}' > ./scripts/creds.json
           
       - name: Run verification from DNSControl
         env:
-          DNSPOD_TOKEN: ${{ secrets.DNSPOD_TOKEN }}
+          TENCENTCLOUD_SECRET_ID: ${{ secrets.TENCENTCLOUD_SECRET_ID }}
+          TENCENTCLOUD_SECRET_KEY: ${{ secrets.TENCENTCLOUD_SECRET_KEY }}
         run: |
           dnscontrol check --config scripts/dnsconfig.js
           
       - name: Push records to DNSControl
         env:
-          DNSPOD_TOKEN: ${{ secrets.DNSPOD_TOKEN }}
+          TENCENTCLOUD_SECRET_ID: ${{ secrets.TENCENTCLOUD_SECRET_ID }}
+          TENCENTCLOUD_SECRET_KEY: ${{ secrets.TENCENTCLOUD_SECRET_KEY }}
         run: |
           dnscontrol push --config scripts/dnsconfig.js --creds ./scripts/creds.json
