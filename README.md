@@ -27,6 +27,7 @@
 ## Supported Record Types
 
 - We support **A, AAAA, CNAME, NS, MX, and TXT** record types.
+- DNS is provided by **Gcore**. Unlike Cloudflare, Gcore DNS does **not** include proxy/CDN functionality — all records are DNS-only.
 
 
 ## JSON Formatting

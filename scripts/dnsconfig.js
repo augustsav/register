@@ -1,5 +1,5 @@
 var REG_NONE = NewRegistrar("none");
-var DNS_BIND = NewDnsProvider("dnspod");
+var DNS_BIND = NewDnsProvider("gcore");
 var DOMAIN_NAME = "is-app.top"
 
 function createSubdomainsObject(jsonsPath) {
